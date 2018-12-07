@@ -13,7 +13,7 @@ toml_write() {
   KEYGROUP=$(echo "$KEY" | awk 'BEGIN{FS=OFS="."}{NF--; print}')
   NAME=$(echo "$KEY" | awk -F\. '{print $NF}')
 
-  if ! [[ "$VALUE" =~ \[.*\] ]] ; then
+  if ! [[ "$VALUE" =~ \[.*\] ]] && [[ -n "$VALUE" ]]; then
     VALUE="\"$VALUE\""
   fi
 
@@ -31,12 +31,12 @@ toml_write() {
     fi
   else
     if [[ -z "$KEYGROUP" ]] ; then
-      echo -e "$NAME" >> "$FILE"
+      echo -e "[$NAME]" >> "$FILE"
     else
       if grep -q "$KEYGROUP" "$FILE"; then
-        sudo sed -i '/\['"$KEYGROUP"'\]/a \\t'"$NAME"'' "$FILE"
+        sudo sed -i '/\['"$KEYGROUP"'\]/a \\t'"\['"$KEYGROUP"'.'"$NAME"'\]' "$FILE"
       else
-        echo -e "[$KEYGROUP]\n\t$NAME" >> "$FILE"
+        echo -e "[$KEYGROUP.$NAME]" >> "$FILE"
       fi
     fi
   fi
