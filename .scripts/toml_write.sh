@@ -13,7 +13,7 @@ toml_write() {
   KEYGROUP=$(echo "$KEY" | awk 'BEGIN{FS=OFS="."}{NF--; print}')
   NAME=$(echo "$KEY" | awk -F\. '{print $NF}')
 
-  if ! [[ "$VALUE" =~ \[.*\] ]] && [[ -n "$VALUE" ]]; then
+  if ! [[ "$VALUE" =~ \[.*\] ]] && [[ -n "$VALUE" ]] ; then
     VALUE="\"$VALUE\""
   fi
 
