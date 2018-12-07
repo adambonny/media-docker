@@ -26,7 +26,9 @@ menu_le_provider() {
     *)
       run_sh "$SCRIPTDIR" "env_set" \
         "LE_CHLG_PROV" "$SELECTION" "$BASEDIR/.env"
-      run_sh "$MENUDIR" "menu_le_provider_config" "$SELECTION"
+      local SEL_PROVIDER=$(run_sh "$SCRIPTDIR" "env_get" \
+        "LE_CHLG_PROV" "$BASEDIR/.env")
+      run_sh "$MENUDIR" "menu_le_provider_config" "$SEL_PROVIDER"
     ;;
   esac
 }
