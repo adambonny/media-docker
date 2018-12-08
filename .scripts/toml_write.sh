@@ -25,6 +25,7 @@ toml_write() {
       echo -e "$NAME = $VALUE" >> "$FILE"
     else
       if grep -q "$KEYGROUP" "$FILE"; then
+        
         sudo sed -i '/\['"$KEYGROUP"'\]/a'$NAME' = '$VALUE'' "$FILE"
       else
         echo -e "[$KEYGROUP]\n$NAME = $VALUE" >> "$FILE"
@@ -34,11 +35,7 @@ toml_write() {
     if [[ -z "$KEYGROUP" ]] ; then
       echo -e "[$NAME]" >> "$FILE"
     else
-      if grep -q "$KEYGROUP" "$FILE"; then
-        sudo sed -i '/\['"$KEYGROUP"'\]/a \['$KEYGROUP'.'$NAME'\]' "$FILE"
-      else
-        echo -e "[$KEYGROUP.$NAME]" >> "$FILE"
-      fi
+      echo -e "[$KEYGROUP.$NAME]" >> "$FILE"
     fi
   fi
 }
