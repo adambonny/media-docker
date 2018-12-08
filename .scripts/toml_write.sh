@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2086
+# shellcheck disable=SC2089
+# shellcheck disable=SC2090
 set -euo pipefail
 
 toml_write() {
@@ -25,7 +28,7 @@ toml_write() {
       echo -e "$NAME = $VALUE" >> "$FILE"
     else
       if grep -q "$KEYGROUP" "$FILE"; then
-        
+
         sudo sed -i '/\['"$KEYGROUP"'\]/a'$NAME' = '$VALUE'' "$FILE"
       else
         echo -e "[$KEYGROUP]\n$NAME = $VALUE" >> "$FILE"
